@@ -32,3 +32,7 @@ function files_backup {
 #### Runner ####
 database_backup
 files_backup
+
+#### Goodbye text ###
+echo "New backup: $NOW.zip"
+echo "Happy DevOps!"
