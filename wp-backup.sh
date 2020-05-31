@@ -13,7 +13,7 @@ DB_HOST=`cat $SITE_PATH/wp-config.php | grep DB_HOST | cut -d \' -f 4`
 
 #### Files Backup ####
 function files_backup {
-    zip -r wp-content.zip .
+    zip -r wp-content.zip wp-content
 }
 
 #### Database Backup ####
@@ -23,12 +23,16 @@ function database_backup {
 
 #### Zip all Backups ####
 function pack_backups {
+    # Make folder
+    mkdir $BACKUP_PATH
     # Move files to pack folder
     mv wp-content.zip $BACKUP_PATH
     # Move database to pack folder
     mv $DB_NAME.sql $BACKUP_PATH
     # Compress
     zip -r $NOW.zip .
+    # Remove temp folder
+    rm -r $BACKUP_PATH
 }
 
 #### Runner ####
