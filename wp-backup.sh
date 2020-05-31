@@ -30,7 +30,7 @@ function pack_backups {
     # Move database to pack folder
     mv $DB_NAME.sql $BACKUP_PATH
     # Compress
-    zip -r $NOW.zip .
+    zip -r $NOW.zip $BACKUP_PATH
     # Remove temp folder
     rm -r $BACKUP_PATH
 }
