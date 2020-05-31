@@ -13,17 +13,22 @@ DB_HOST=`cat wp-config.php | grep DB_HOST | cut -d \' -f 4`
 
 #### Database Backup ####
 function database_backup {
+    # Backup database
     mysqldump -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $DB_NAME.sql
+    # Replace SITE_URL `by localhost`
+    SITE_URL=`cat wordpress.sql | grep siteurl | cut -d \' -f 4`
+    NEW_SITE_URL='http://localhost'
+    sed -Ei "s,$SITE_URL,$NEW_SITE_URL,g" $DB_NAME.sql
 }
 
 #### Files Backup ####
 function files_backup {
     # Compress
     zip -r $NOW.zip $BACKUP_PATH $DB_NAME.sql wp-content
+    # Remove backup database
+    rm $DB_NAME.sql
 }
 
 #### Runner ####
 database_backup
 files_backup
-
-#INSERT INTO `wp_options` VALUES (1,'siteurl','http://pixelmouse.es','yes'),(2,'home','http://pixelmouse.es','yes'),
