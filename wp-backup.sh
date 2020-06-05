@@ -70,7 +70,7 @@ database_backup() {
 # Files Backup
 files_backup() {
     # Compress
-    zip -r $NOW.zip $BACKUP_PATH $DB_NAME.sql wp-content .htaccess wp-config.php
+    zip -r $NOW.zip $BACKUP_PATH $DB_NAME.sql wp-content
 }
 
 # Database Restore
