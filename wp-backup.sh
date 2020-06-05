@@ -58,7 +58,7 @@ EOF
 # Database Backup
 database_backup() {
     # Remove old backup database
-    rm $DB_NAME.sql
+    rm -f $DB_NAME.sql
     # Backup database
     mysqldump -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $DB_NAME.sql
     # Replace SITE_URL `by localhost`
@@ -70,17 +70,17 @@ database_backup() {
 # Files Backup
 files_backup() {
     # Compress
-    zip -r $NOW.zip $BACKUP_PATH $DB_NAME.sql wp-content
-    # Remove backup database
-    rm $DB_NAME.sql
+    zip -r $NOW.zip $BACKUP_PATH $DB_NAME.sql wp-content .htaccess wp-config.php
 }
 
 # Database Restore
 database_restore() {
+    echo "restore"
 }
 
 # Files Restore
 files_restore() {
+    echo "restore"
 }
 
 # CONTROLE ARGUMENTS
@@ -91,12 +91,19 @@ while [ $# -gt 0 ] ; do
         --help)
             usage
             ;;
-        backup)
+        backup-all)
             isArg="1"
             database_backup
             files_backup
             #### GOODBYE ###
             echo "New backup: $NOW.zip"
+            echo "Happy DevOps!"
+            ;;
+        backup-database)
+            isArg="1"
+            database_backup
+            #### GOODBYE ###
+            echo "New Database backup: $DB_NAME.sql"
             echo "Happy DevOps!"
             ;;
         restore)
