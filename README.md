@@ -1,3 +1,5 @@
+Create backups or restore on your WordPress using a simple script so as not to depend on plugins or WP-CLI. Bash's power is enough. Multi-site compatible.
+
 ## Use
 
 ### Backup
