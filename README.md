@@ -36,6 +36,7 @@ Only restore database. The `site url` variable is the domain to use
 
 - **bash** 4.0 or higher
 - **curl**
+- **zip**
 - Only macOS users, **gsed**: `brew install gnu-sed`
 
 ## Install
