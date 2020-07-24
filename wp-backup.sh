@@ -9,6 +9,7 @@ PROGNAME=$(basename $0)
 NOW=$(date +"%Y-%m-%d-%H%M")
 FULL_PATH=$(pwd)
 BACKUP_PATH=$NOW
+NEW_SITE_URL='http://localhost'
 # Site-specific Info
 DB_NAME=`cat wp-config.php | grep DB_NAME | cut -d \' -f 4`
 DB_USER=`cat wp-config.php | grep DB_USER | cut -d \' -f 4`
@@ -61,9 +62,8 @@ database_backup() {
     rm -f $DB_NAME.sql
     # Backup database
     mysqldump -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $DB_NAME.sql
-    # Replace SITE_URL `by localhost`
+    # Replace SITE_URL by `localhost`
     SITE_URL=`cat $DB_NAME.sql | grep siteurl | cut -d \' -f 4`
-    NEW_SITE_URL='http://localhost'
     custom-sed -Ei "s,$SITE_URL,$NEW_SITE_URL,g" $DB_NAME.sql
 }
 
@@ -75,7 +75,10 @@ files_backup() {
 
 # Database Restore
 database_restore() {
-    echo "restore"
+    # Replace `localhost` by SITE_URL
+    custom-sed -Ei "s,$NEW_SITE_URL,$SITE_URL,g" $1.sql
+    # Restore tables
+    cat $1 | /usr/bin/mysql -u DB_USER --password=DB_PASS DB_NAME
 }
 
 # Files Restore
@@ -106,9 +109,10 @@ while [ $# -gt 0 ] ; do
             echo "New Database backup: $DB_NAME.sql"
             echo "Happy DevOps!"
             ;;
-        restore)
+        restore-database)
             isArg="1"
             echo 'Working'
+            database_restore
             ;;
         *)
     esac
