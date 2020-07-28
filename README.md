@@ -1,3 +1,5 @@
+![Description](media/description.svg)
+
 Create **backups or restore on your WordPress** using a **simple script in Bash** so as not to depend on plugins or WP-CLI.
 
 - Easy.
