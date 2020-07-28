@@ -102,7 +102,10 @@ database_restore() {
 
 # Files Restore
 files_restore() {
-    echo "restore"
+    # Remove folder `wp-content`
+    rm -rf wp-content
+    # Unzip backup
+    unzip $1
 }
 
 # CONTROLE ARGUMENTS
@@ -115,24 +118,37 @@ while [ $# -gt 0 ] ; do
             ;;
         backup-all)
             isArg="1"
+            echo "Working..."
             database_backup
             files_backup
             #### GOODBYE ###
-            echo "New backup: $NOW.zip"
+            echo "${COLOR_GREEN}New backup:${COLOR_RESET} $NOW.zip"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         backup-database)
             isArg="1"
+            echo "Working..."
             database_backup
             #### GOODBYE ###
-            echo "New Database backup: $DB_NAME.sql"
+            echo "${COLOR_GREEN}New Database backup:${COLOR_RESET} $DB_NAME.sql"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         restore-database)
             isArg="1"
-            echo "Working..."
+            echo "Restoring database..."
             database_restore
-            echo "Database restored."
+            echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
+            echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
+            ;;
+        restore-all)
+            isArg="1"
+            echo "Restoring database..."
+            database_restore
+            echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
+            echo "Restoring files..."
+            files_restore
+            echo "${COLOR_GREEN}Files restored.${COLOR_RESET}"
+            echo "${COLOR_GREEN}All restored.${COLOR_RESET}"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         *)
