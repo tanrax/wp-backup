@@ -42,7 +42,7 @@ TABLE_PREFIX=$(cat wp-config.php | grep "\$table_prefix" | cut -d \' -f 2)
 NEW_SITE_URL='http://localhost'
 NEW_SITE_DOMAIN=$(cat $NEW_SITE_URL | custom-sed -nr "s/^https?:\/\/(.*)$/\1/p")
 SITE_URL=$(mysql -e "SELECT option_value FROM $TABLE_PREFIXoptions WHERE option_name = 'siteurl'" -ss -u $DB_USER --password=$DB_PASS $DB_NAME)
-SITE_DOMAIN=$(custom-sed -nr "s/^https?:\/\/(.*)\/?/\1/p" $SITE_URL)
+SITE_DOMAIN=$(cat $SITE_URL | custom-sed -nr "s/^https?:\/\/(.*)\/?/\1/p")
 
 #### FUNCTIONS ####
 
