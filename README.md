@@ -1,4 +1,11 @@
-Create backups or restore on your WordPress using a simple script so as not to depend on plugins or WP-CLI. Bash's power is enough. Multi-site compatible.
+Create **backups or restore on your WordPress** using a **simple script in Bash** so as not to depend on plugins or WP-CLI.
+
+- Easy.
+- Very fast.
+- Multi-site compatible.
+- Compatible with cron and any unix utility.
+- Maintains settings, plugins and any important elements.
+- Compatible with Linux, MacOS and BSD.
 
 ## Use
 
@@ -21,7 +28,7 @@ Create a zip file with important files and backup of the database.
 The `site url` variable is the domain to use.
 
 ``` shell
-./wp-backup.sh restore-all [{backup}.zip] [site url]
+./wp-backup.sh restore-all [{backup}.zip]
 ```
 
 ### Restore the database
@@ -29,7 +36,7 @@ The `site url` variable is the domain to use.
 Only restore database. The `site url` variable is the domain to use
 
 ``` shell
-./wp-backup.sh restore-database [{database}.sql] [site url]
+./wp-backup.sh restore-database [{database}.sql]
 ```
 
 ## Requirements 
@@ -64,3 +71,7 @@ Run.
 ``` shell
 ./wp-backup.sh
 ```
+
+## Disclaimer
+
+The author is not responsible for any loss of information or side effects. Use at your own risk.
