@@ -1,3 +1,7 @@
+<h2 align="center">
+Simple tool to manage WordPress backups in pure Bash
+</h2>
+
 ![Description](media/description.svg)
 
 Create **backups or restore on your WordPress** using a **simple script in Bash** so as not to depend on plugins or WP-CLI.
