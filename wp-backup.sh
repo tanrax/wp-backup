@@ -32,16 +32,16 @@ FULL_PATH=$(pwd)
 BACKUP_PATH=$NOW
 
 # Site-specific Info
-DB_NAME=`cat wp-config.php | grep DB_NAME | cut -d \' -f 4`
-DB_USER=`cat wp-config.php | grep DB_USER | cut -d \' -f 4`
-DB_PASS=`cat wp-config.php | grep DB_PASSWORD | cut -d \' -f 4`
-DB_HOST=`cat wp-config.php | grep DB_HOST | cut -d \' -f 4`
+DB_NAME=$(cat wp-config.php | grep DB_NAME | cut -d \' -f 4)
+DB_USER=$(cat wp-config.php | grep DB_USER | cut -d \' -f 4)
+DB_PASS=$(cat wp-config.php | grep DB_PASSWORD | cut -d \' -f 4)
+DB_HOST=$(cat wp-config.php | grep DB_HOST | cut -d \' -f 4)
 TABLE_PREFIX=$(cat wp-config.php | grep "\$table_prefix" | cut -d \' -f 2)
 
 # Domain
 NEW_SITE_URL='http://localhost'
-NEW_SITE_DOMAIN=$(custom-sed -nr "s/^https?:\/\/(.*)$/\1/p" $NEW_SITE_URL)
-SITE_URL=`mysql -e "SELECT option_value FROM $TABLE_PREFIX options WHERE option_name = 'siteurl'" -ss -u $DB_USER --password=$DB_PASS $DB_NAME`
+NEW_SITE_DOMAIN=$(cat $NEW_SITE_URL | custom-sed -nr "s/^https?:\/\/(.*)$/\1/p")
+SITE_URL=$(mysql -e "SELECT option_value FROM $TABLE_PREFIXoptions WHERE option_name = 'siteurl'" -ss -u $DB_USER --password=$DB_PASS $DB_NAME)
 SITE_DOMAIN=$(custom-sed -nr "s/^https?:\/\/(.*)\/?/\1/p" $SITE_URL)
 
 #### FUNCTIONS ####
