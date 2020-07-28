@@ -31,6 +31,11 @@ NOW=$(date +"%Y-%m-%d-%H%M")
 FULL_PATH=$(pwd)
 BACKUP_PATH=$NOW
 
+# COLORS
+COLOR_RED=`tput setaf 1`
+COLOR_GREEN=`tput setaf 2`
+COLOR_RESET=`tput sgr0`
+
 # Site-specific Info
 DB_NAME=$(cat wp-config.php | grep DB_NAME | cut -d \' -f 4)
 DB_USER=$(cat wp-config.php | grep DB_USER | cut -d \' -f 4)
@@ -114,21 +119,21 @@ while [ $# -gt 0 ] ; do
             files_backup
             #### GOODBYE ###
             echo "New backup: $NOW.zip"
-            echo "Happy DevOps!"
+            echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         backup-database)
             isArg="1"
             database_backup
             #### GOODBYE ###
             echo "New Database backup: $DB_NAME.sql"
-            echo "Happy DevOps!"
+            echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         restore-database)
             isArg="1"
             echo "Working..."
             database_restore
             echo "Database restored."
-            echo "Happy DevOps!"
+            echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         *)
     esac
