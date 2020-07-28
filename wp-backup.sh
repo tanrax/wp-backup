@@ -106,6 +106,11 @@ files_restore() {
     rm -rf wp-content
     # Unzip backup
     unzip $1
+    # Fix owner
+    chown -R --reference=wp-config.php wp-content
+    # Fix permissons
+    find wp-content -type d -exec chmod 750 {} \;
+    find wp-content -type f -exec chmod 640 {} \;
 }
 
 # CONTROLE ARGUMENTS
