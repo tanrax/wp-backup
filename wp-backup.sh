@@ -125,8 +125,10 @@ while [ $# -gt 0 ] ; do
             ;;
         restore-database)
             isArg="1"
-            echo 'Working'
+            echo "Working..."
             database_restore
+            echo "Database restored."
+            echo "Happy DevOps!"
             ;;
         *)
     esac
