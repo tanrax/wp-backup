@@ -30,6 +30,7 @@ PROGNAME=$(basename $0)
 NOW=$(date +"%Y-%m-%d-%H%M")
 FULL_PATH=$(pwd)
 BACKUP_PATH=$NOW
+BACKUP_DATABASE_NAME="database.sql"
 
 # COLORS
 COLOR_RED=`tput setaf 1`
@@ -66,7 +67,7 @@ Options:
   backup-database                    Backup of the database.
   restore-all [{backup}.zip]         Restore a version.
   restore-database [{database}.sql]  Restore the database.
-  --help                             Display this usage message and exit
+  --help                             Display this usage message.
 EOF
 
     exit 1
@@ -77,27 +78,27 @@ database_backup() {
     # Remove old backup database
     rm -f $DB_NAME.sql
     # Backup database
-    mysqldump -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $DB_NAME.sql
+    mysqldump -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $BACKUP_DATABASE_NAME
     # Replace SITE_URL (`http://example.com`) by `http://localhost`
-    custom-sed -Ei "s,$SITE_URL,$NEW_SITE_URL,g" $DB_NAME.sql
+    custom-sed -Ei "s,$SITE_URL,$NEW_SITE_URL,g" $BACKUP_DATABASE_NAME
     # Replace SITE_DOMAIN (`example.com`) by `localhost`: Fix multisite
-    custom-sed -Ei "s,$SITE_DOMAIN,$NEW_SITE_DOMAIN,g" $DB_NAME.sql
+    custom-sed -Ei "s,$SITE_DOMAIN,$NEW_SITE_DOMAIN,g" $BACKUP_DATABASE_NAME
 }
 
 # Files Backup
 files_backup() {
     # Compress
-    zip -r $NOW.zip $BACKUP_PATH $DB_NAME.sql wp-content
+    zip -r $NOW.zip $BACKUP_PATH $BACKUP_DATABASE_NAME wp-content
 }
 
 # Database Restore
 database_restore() {
     # Replace `http://localhost` by SITE_URL (`http://example.com`)
-    custom-sed -Ei "s,$NEW_SITE_URL,$SITE_URL,g" $1
+    custom-sed -Ei "s,$NEW_SITE_URL,$SITE_URL,g" $BACKUP_DATABASE_NAME
     # Replace `localhost` by SITE_DOMAIN (`example.com`): Fix multisite
-    custom-sed -Ei "s,$NEW_SITE_DOMAIN,$SITE_DOMAIN,g" $1
+    custom-sed -Ei "s,$NEW_SITE_DOMAIN,$SITE_DOMAIN,g" $BACKUP_DATABASE_NAME
     # Restore tables
-    cat $1 | /usr/bin/mysql -u DB_USER --password=DB_PASS DB_NAME
+    cat $BACKUP_DATABASE_NAME | /usr/bin/mysql -u DB_USER --password=DB_PASS DB_NAME
 }
 
 # Files Restore
@@ -123,36 +124,43 @@ while [ $# -gt 0 ] ; do
             ;;
         backup-all)
             isArg="1"
+            
             echo "Working..."
             database_backup
             files_backup
-            #### GOODBYE ###
+
             echo "${COLOR_GREEN}New backup:${COLOR_RESET} $NOW.zip"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         backup-database)
             isArg="1"
+            
             echo "Working..."
             database_backup
-            #### GOODBYE ###
-            echo "${COLOR_GREEN}New Database backup:${COLOR_RESET} $DB_NAME.sql"
+            
+            echo "${COLOR_GREEN}New Database backup:${COLOR_RESET} $BACKUP_DATABASE_NAME"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         restore-database)
             isArg="1"
+            
             echo "Restoring database..."
             database_restore
+            
             echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         restore-all)
             isArg="1"
-            echo "Restoring database..."
-            database_restore
-            echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
+            
             echo "Restoring files..."
             files_restore
             echo "${COLOR_GREEN}Files restored.${COLOR_RESET}"
+            
+            echo "Restoring database..."
+            database_restore
+            echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
+
             echo "${COLOR_GREEN}All restored.${COLOR_RESET}"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
