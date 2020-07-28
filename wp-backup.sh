@@ -2,6 +2,25 @@
 
 set -e
 
+#### COMMANDS CROSS SYSTEMS (Linux and MacOS) ####
+
+# Create sed cross system
+custom-sed() {
+    if [[ $THIS_OS = *$NAME_OSX* ]]; then
+        # Check if OSX and install GSED
+        if [ -x "$(command -v gsed)" ]; then
+            gsed "$@"
+        else
+            echo "${COLOR_RED}ERROR. You must install gsed if you are using OSX${COLOR_RESET}"
+            exit 1
+        fi
+    else
+        # Linux
+        sed "$@"
+    fi
+}
+export -f custom-sed
+
 #### VARIABLES ####
 NAME_OSX="Darwin"
 THIS_OS=$(uname -mrs)
@@ -10,6 +29,9 @@ NOW=$(date +"%Y-%m-%d-%H%M")
 FULL_PATH=$(pwd)
 BACKUP_PATH=$NOW
 NEW_SITE_URL='http://localhost'
+NEW_SITE_DOMAIN=$(custom-sed -nr "s/^https?:\/\/(.*)$/\1/p" $NEW_SITE_URL)
+SITE_URL=`cat $DB_NAME.sql | grep siteurl | cut -d \' -f 4`
+SITE_DOMAIN=$(custom-sed -nr "s/^https?:\/\/(.*)\/?/\1/p" $SITE_URL)
 # Site-specific Info
 DB_NAME=`cat wp-config.php | grep DB_NAME | cut -d \' -f 4`
 DB_USER=`cat wp-config.php | grep DB_USER | cut -d \' -f 4`
@@ -62,9 +84,10 @@ database_backup() {
     rm -f $DB_NAME.sql
     # Backup database
     mysqldump -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $DB_NAME.sql
-    # Replace SITE_URL by `localhost`
-    SITE_URL=`cat $DB_NAME.sql | grep siteurl | cut -d \' -f 4`
+    # Replace SITE_URL (`http://example.com`) by `http://localhost`
     custom-sed -Ei "s,$SITE_URL,$NEW_SITE_URL,g" $DB_NAME.sql
+    # Replace SITE_DOMAIN (`example.com`) by `localhost`: Fix multisite
+    custom-sed -Ei "s,$SITE_DOMAIN,$NEW_SITE_DOMAIN,g" $DB_NAME.sql
 }
 
 # Files Backup
