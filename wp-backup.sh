@@ -154,7 +154,7 @@ while [ $# -gt 0 ] ; do
             isArg="1"
             
             echo "Restoring files..."
-            files_restore
+            files_restore $2
             echo "${COLOR_GREEN}Files restored.${COLOR_RESET}"
             
             echo "Restoring database..."
