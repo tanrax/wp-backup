@@ -31,15 +31,11 @@ Create a zip file with important files and backup of the database.
 
 ### Restore
 
-The `site url` variable is the domain to use.
-
 ``` shell
 ./wp-backup.sh restore-all [{backup}.zip]
 ```
 
 ### Restore the database
-
-Only restore database. The `site url` variable is the domain to use
 
 ``` shell
 ./wp-backup.sh restore-database [{database}.sql]
