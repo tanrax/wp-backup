@@ -29,16 +29,22 @@ Create a zip file with important files and backup of the database.
 ./wp-backup.sh backup-database
 ```
 
-### Restore
+### Restore only files
 
 ``` shell
-./wp-backup.sh restore-all [{backup}.zip]
+./wp-backup.sh restore-files [{backup}.zip]
 ```
 
-### Restore the database
+### Restore only database
 
 ``` shell
 ./wp-backup.sh restore-database [{database}.sql]
+```
+
+### Restore files and database
+
+``` shell
+./wp-backup.sh restore-all [{backup}.zip]
 ```
 
 ## Requirements 
