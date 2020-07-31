@@ -110,8 +110,8 @@ files_restore() {
     # Fix owner
     chown -R --reference=wp-config.php wp-content
     # Fix permissons
-    find wp-content -type d -exec chmod 750 {} \;
-    find wp-content -type f -exec chmod 640 {} \;
+    find wp-content -type d -exec chmod 755 {} \;
+    find wp-content -type f -exec chmod 644 {} \;
 }
 
 # CONTROLE ARGUMENTS
@@ -148,6 +148,14 @@ while [ $# -gt 0 ] ; do
             database_restore
             
             echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
+            echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
+            ;;
+        restore-files)
+            isArg="1"
+            
+            echo "Restoring files..."
+            files_restore $2
+            echo "${COLOR_GREEN}Files restored.${COLOR_RESET}"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
             ;;
         restore-all)
