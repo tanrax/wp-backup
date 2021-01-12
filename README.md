@@ -1,5 +1,5 @@
 <h2 align="center">
-Simple tool to manage WordPress backups in pure Bash
+Simple script to manage WordPress backups in pure Bash
 </h2>
 
 ![Description](media/wp-backup.png)
@@ -9,7 +9,8 @@ Create **backups or restore on your WordPress** using a **simple script in Bash*
 - Easy.
 - Very fast.
 - Multi-site compatible.
-- Compatible with cron and any unix utility.
+- Docker compatible.
+- Working with cron and any unix utility.
 - Maintains settings, plugins and any important elements.
 - Compatible with Linux, MacOS and BSD.
 
@@ -79,6 +80,16 @@ Run.
 ``` shell
 ./wp-backup.sh
 ```
+
+## Are you using Docker?
+
+You will need to enter the WordPress container and install `mariadb-client`.
+
+``` shell
+apt-get update && apt install mariadb-client
+```
+
+It is recommended that you run `wp-backup.sh` inside.
 
 ## Disclaimer
 
