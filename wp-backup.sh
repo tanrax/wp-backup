@@ -47,7 +47,7 @@ TABLE_PREFIX=$(cat wp-config.php | grep "\$table_prefix" | cut -d \' -f 2)
 # Domain
 NEW_SITE_URL='http://localhost'
 NEW_SITE_DOMAIN=$(echo $NEW_SITE_URL | custom-sed -nr "s/^https?:\/\/(.*)$/\1/p")
-SITE_URL=$(mysql -e "SELECT option_value FROM ${TABLE_PREFIX}options WHERE option_name = 'siteurl'" -ss -h $DB_HOST -u $DB_USER --password=$DB_PASS $DB_NAME)
+SITE_URL=$(mysql -e "SELECT option_value FROM ${TABLE_PREFIX}options WHERE option_name = 'siteurl'" -ss -h$DB_HOST -u$DB_USER --password=$DB_PASS $DB_NAME)
 SITE_DOMAIN=$(echo $SITE_URL | custom-sed -nr "s/^https?:\/\/(.*)\/?/\1/p")
 
 #### FUNCTIONS ####
@@ -78,7 +78,7 @@ database_backup() {
     # Remove old backup database
     rm -f $DB_NAME.sql
     # Backup database
-    mysqldump -h $DB_HOST -u $DB_USER -p $DB_PASS $DB_NAME > $BACKUP_DATABASE_NAME
+    mysqldump -h$DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME > $BACKUP_DATABASE_NAME
     # Replace SITE_URL (`http://example.com`) by `http://localhost`
     custom-sed -Ei "s,$SITE_URL,$NEW_SITE_URL,g" $BACKUP_DATABASE_NAME
     # Replace SITE_DOMAIN (`example.com`) by `localhost`: Fix multisite
@@ -98,7 +98,7 @@ database_restore() {
     # Replace `localhost` by SITE_DOMAIN (`example.com`): Fix multisite
     custom-sed -Ei "s,$NEW_SITE_DOMAIN,$SITE_DOMAIN,g" $BACKUP_DATABASE_NAME
     # Restore tables
-    cat $BACKUP_DATABASE_NAME | /usr/bin/mysql -h $DB_HOST -u $DB_USER --password=$DB_PASS $DB_NAME
+    cat $BACKUP_DATABASE_NAME | /usr/bin/mysql -h$DB_HOST -u$DB_USER --password=$DB_PASS $DB_NAME
 }
 
 # Files Restore
