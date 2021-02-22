@@ -92,7 +92,7 @@ docker exec -it wordpress_web_1 bash
 You will need to enter the WordPress container and install `mariadb-client`.
 
 ``` shell
-apt-get update && apt install mariadb-client
+apt-get update && apt install -y mariadb-client
 ```
 
 It is recommended that you run `wp-backup.sh` inside.
