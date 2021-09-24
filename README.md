@@ -89,10 +89,14 @@ Enter the container with bash. For example `wordpress_web_1`.
 docker exec -it wordpress_web_1 bash
 ```
 
-You will need to enter the WordPress container and install `mariadb-client`.
+You will need to enter the WordPress container and install a minimum of unix commands.
+
+- `zip`
+- `unzip`
+- `mariadb-client`
 
 ``` shell
-apt-get update && apt install -y mariadb-client
+apt-get update && apt install -y mariadb-client zip unzip
 ```
 
 It is recommended that you run `wp-backup.sh` inside.
