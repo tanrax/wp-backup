@@ -42,6 +42,10 @@ DB_NAME=$(cat wp-config.php | grep DB_NAME | cut -d \' -f 4)
 DB_USER=$(cat wp-config.php | grep DB_USER | cut -d \' -f 4)
 DB_PASS=$(cat wp-config.php | grep DB_PASSWORD | cut -d \' -f 4)
 DB_HOST=$(cat wp-config.php | grep DB_HOST | cut -d \' -f 4)
+# Replace in DB_HOST localhost to 127.0.0.1 to fix in mysql command
+if [ $DB_HOST == "localhost" ] ; then
+    DB_HOST=127.0.0.1
+fi
 TABLE_PREFIX=$(cat wp-config.php | grep "\$table_prefix" | cut -d \' -f 2)
 
 # Domain
