@@ -96,7 +96,7 @@ You will need to enter the WordPress container and install a minimum of unix com
 - `mariadb-client`
 
 ``` shell
-apt-get update && apt install -y mariadb-client zip unzip
+apt update && apt install -y mariadb-client zip unzip
 ```
 
 It is recommended that you run `wp-backup.sh` inside.
