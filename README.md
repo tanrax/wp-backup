@@ -2,7 +2,7 @@
 Simple script to manage WordPress backups in pure Bash
 </h2>
 
-![Description](media/wp-backup.png)
+![Description](media/hero.png)
 
 Create **backups or restore on your WordPress** using a **simple script in Bash** so as not to depend on plugins or WP-CLI.
 
