@@ -170,7 +170,7 @@ while [ $# -gt 0 ] ; do
             echo "${COLOR_GREEN}Files restored.${COLOR_RESET}"
             
             echo "Restoring database..."
-            database_restore
+            database_restore $BACKUP_DATABASE_NAME
             echo "${COLOR_GREEN}Database restored.${COLOR_RESET}"
 
             echo "${COLOR_GREEN}All restored.${COLOR_RESET}"
