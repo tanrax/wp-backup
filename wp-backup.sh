@@ -118,6 +118,19 @@ files_restore() {
     find wp-content -type f -exec chmod 644 {} \;
 }
 
+# Check the connection to the database
+database_check_connection() {
+    echo '\q' | mysql -h$DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME
+    
+}
+
+# Connection to the database
+database_connect_to_database() {
+    mysql -h$DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME
+    
+}
+
+
 # CONTROLE ARGUMENTS
 isArg=""
 
@@ -175,6 +188,21 @@ while [ $# -gt 0 ] ; do
 
             echo "${COLOR_GREEN}All restored.${COLOR_RESET}"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
+            ;;
+        check-database)
+            isArg="1"
+            echo "Connecting..."
+            database_check_connection
+            if [ $? -eq 0 ]; then
+                echo "${COLOR_GREEN}Connection successful.${COLOR_RESET}"
+            else
+                echo "${COLOR_RED}Connection failed.${COLOR_RESET}"
+            fi
+            ;;
+        connect-to-database)
+            isArg="1"
+            echo "Connecting..."
+            database_connect_to_database
             ;;
         *)
     esac

@@ -16,7 +16,7 @@ Create **backups or restore on your WordPress** using a **simple script in Bash*
 
 ## Use
 
-### Backup
+### ⬇️ 📁 ➕ ⬇️ 📓 Backup 
 
 Create a zip file with important files and backup of the database.
 
@@ -24,28 +24,40 @@ Create a zip file with important files and backup of the database.
 ./wp-backup.sh backup-all
 ```
 
-### Backup only database
+### ⬇️ 📓 Backup only database 
 
 ``` shell
 ./wp-backup.sh backup-database
 ```
 
-### Restore only files
-
+### ⬇️ 📁 Restore only files 
+ 
 ``` shell
 ./wp-backup.sh restore-files [{backup}.zip]
 ```
 
-### Restore only database
+### ⬆️ 📓 Restore only database
 
 ``` shell
 ./wp-backup.sh restore-database [{database}.sql]
 ```
 
-### Restore files and database
+### ⬆️ 📁 ➕ ⬆️ 📓 Restore files and database 
 
 ``` shell
 ./wp-backup.sh restore-all [{backup}.zip]
+```
+
+### ✅ 📓 Check the connection to the database 
+
+``` shell
+./wp-backup.sh check-database
+```
+
+### 🔌 📓 Connection to the database
+
+``` shell
+./wp-backup.sh connect-to-database
 ```
 
 ## Requirements 
