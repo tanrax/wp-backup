@@ -102,7 +102,7 @@ database_restore() {
     # Replace `localhost` by SITE_DOMAIN (`example.com`): Fix multisite
     custom-sed -Ei "s,$NEW_SITE_DOMAIN,$SITE_DOMAIN,g" $BACKUP_DATABASE_NAME
     # Restore tables
-    cat $1 | /usr/bin/mysql -h$DB_HOST -u$DB_USER --password=$DB_PASS $DB_NAME
+    cat $1 | mysql -h$DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME
 }
 
 # Files Restore
