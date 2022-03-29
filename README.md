@@ -1,8 +1,9 @@
 <h2 align="center">
 Snapshot and backups for WordPress in pure Bash 
 </h2>
-
-![Logo](media/wp-backup-logo.png)
+<p align="center">
+ <img src="media/wp-backup-logo.png" alt="logo" width="300">
+</p>
 
 Create **backups or restores on your WordPress** using a **simple Bash script** and don't rely on plugins or WP-CLI.
 
