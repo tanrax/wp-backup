@@ -77,7 +77,7 @@ EOF
     exit 1
 }
 
-# Database Backup
+# Backup Database 
 database_backup() {
     # Remove old backup database
     rm -f $DB_NAME.sql
@@ -89,10 +89,18 @@ database_backup() {
     custom-sed -Ei "s,$SITE_DOMAIN,$NEW_SITE_DOMAIN,g" $BACKUP_DATABASE_NAME
 }
 
-# Files Backup
+# Backup Files 
 files_backup() {
     # Compress
     zip -r $NOW.zip $BACKUP_PATH $BACKUP_DATABASE_NAME wp-content
+}
+
+# Backup files and Databases
+backup_all() {
+    database_backup
+    files_backup
+    # Remove database
+    rm -f $DB_NAME.sql
 }
 
 # Database Restore
@@ -143,8 +151,7 @@ while [ $# -gt 0 ] ; do
             isArg="1"
             
             echo "Working..."
-            database_backup
-            files_backup
+            backup_all
 
             echo "${COLOR_GREEN}New backup:${COLOR_RESET} $NOW.zip"
             echo "${COLOR_GREEN}Happy DevOps!${COLOR_RESET}"
